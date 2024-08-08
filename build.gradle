@@ -1,0 +1,102 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'platform'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.assertj:assertj-core:3.8.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'mysql:mysql-connector-java:8.0.32'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Swagger OpenAPI with SpringDocs
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+	// jsoup HTML parser library @ https://jsoup.org/
+	implementation 'org.jsoup:jsoup:1.17.2'
+
+	// ModelMapper library for converting Entity to DTO with auto-conversion between String and UUID types
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation 'org.modelmapper:modelmapper:3.2.0'
+
+	// QR Code generator library
+	implementation 'com.google.zxing:core:3.5.3'
+	implementation 'com.google.zxing:javase:3.5.3'
+
+	// Querydsl dynamic querying
+	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	// Spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// Spring Security OAuth
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	// Apache Tika (file type detector)
+	implementation 'org.apache.tika:tika-core:2.9.1'
+
+	// Fix warning : "unknown enum constant When.MAYBE"
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+def querydslSrcDir = 'src/main/generated'
+sourceSets {
+	main {
+		java {
+			srcDirs += [ querydslSrcDir ]
+		}
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.generatedSourceOutputDirectory = file(querydslSrcDir)
+}
+
+//tasks.withType(JavaExec) {
+//	jvmArgs(["-Dfile.encoding=UTF-8"])
+//}
+
+clean {
+	delete file(querydslSrcDir)
+}
