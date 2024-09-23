@@ -73,6 +73,9 @@ dependencies {
 
 	// Fix warning : "unknown enum constant When.MAYBE"
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+	// Fix "ClassNotFoundException" net.bytebuddy.NamingStrategy$SuffixingRandom$BaseNameResolver
+	implementation 'net.bytebuddy:byte-buddy:1.14.12'
 }
 
 tasks.named('test') {
