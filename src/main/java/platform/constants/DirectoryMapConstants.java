@@ -17,7 +17,6 @@ public final class DirectoryMapConstants {
     public static final String DEFAULT_DIR = "C:/Users/User/Documents/AllofHealth/allofhealth/platform/src/main/resources/static/default/";
 
     public static final String PLATFORM_SERVER_SOCKET_ADDR = "http://192.168.0.2:8080";
-
     public static final String PLATFORM_SERVER_IP_ADDR = "192.168.0.2";
 
     public static final String MESSENGER_SERVER_SOCKET_ADDR = "http://192.168.0.2:8070";

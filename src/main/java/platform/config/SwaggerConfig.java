@@ -10,7 +10,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(servers = {@Server(url = "http://192.168.0.2:8080"), @Server(url = "localhost:8080")},
+//@OpenAPIDefinition(servers = {@Server(url = "http://192.168.0.2:8080"), @Server(url = "localhost:8080")},
+        @OpenAPIDefinition(
         info = @Info(
         title = "AllofHealth platform APIs",
         description = "<p>1. Auth API에서 <b>/api/auth/login</b> (로그인)또는 <b>/api/auth/register</b>(회원가입) 통해 JWT access token과 refresh token을 발급 받는다 <i>(access token : 5분 유효, refresh token : 15분 유효)</i></p>" +
